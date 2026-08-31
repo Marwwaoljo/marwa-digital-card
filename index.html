@@ -998,61 +998,46 @@ new QRCode(
 /* =========================================
    SAVE CONTACT
 ========================================= */
-
 function saveContact() {
 
+    const vcard = [
+        "BEGIN:VCARD",
+        "VERSION:3.0",
+        "FN:Marwa Hussein Abdulrahman",
+        "N:Hussein;Marwa Abdulrahman;;;",
+        "TEL;TYPE=CELL:+966550961627",
+        "EMAIL;TYPE=INTERNET:marwa.h1k2@gmail.com",
+        "TITLE:Web Designer & Developer",
+        "URL:https://marwwaoljo.github.io/marwa-portfolio/index.html",
+        "X-SOCIALPROFILE;TYPE=Instagram:https://www.instagram.com/meme.h1k2/",
+        "X-SOCIALPROFILE;TYPE=TikTok:https://www.tiktok.com/@of_the_future1",
+        "END:VCARD"
+    ].join("\r\n");
 
-    const vcard =
+    const blob = new Blob(
+        [vcard],
+        {
+            type: "text/vcard;charset=utf-8"
+        }
+    );
 
-`BEGIN:VCARD
-VERSION:3.0
-FN:Marwa Hussein Abdulrahman
-N:Hussein Abdulrahman;Marwa;;;
-TEL;TYPE=CELL:+966550961627
-EMAIL:marwa.h1k2@gmail.com
-TITLE:Web Designer & Developer
-NOTE:Front-End & Back-End Developer
-URL:https://marwwaoljo.github.io/marwa-portfolio/index.html
-X-SOCIALPROFILE;TYPE=Instagram:https://www.instagram.com/meme.h1k2/
-X-SOCIALPROFILE;TYPE=TikTok:https://www.tiktok.com/@of_the_future1
-END:VCARD`;
+    const url = URL.createObjectURL(blob);
 
+    const link = document.createElement("a");
 
-    const blob =
-        new Blob(
-            [vcard],
-            {
-                type:
-                    "text/vcard"
-            }
-        );
+    link.href = url;
+    link.download = "Marwa-Hussein.vcf";
 
+    document.body.appendChild(link);
 
-    const url =
-        URL.createObjectURL(blob);
+    link.click();
 
+    link.remove();
 
-    const a =
-        document.createElement("a");
-
-
-    a.href = url;
-
-    a.download =
-        "Marwa-Hussein.vcf";
-
-
-    document.body.appendChild(a);
-
-    a.click();
-
-    a.remove();
-
-    URL.revokeObjectURL(url);
-
+    setTimeout(() => {
+        URL.revokeObjectURL(url);
+    }, 5000);
 }
-
-
 
 /* =========================================
    SHARE
