@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Marwa Hussein — Digital Business Card</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <!-- QR CODE -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #080808;
+            --text: #f4f1e9;
+            --muted: #929087;
+            --line: rgba(255,255,255,.10);
+            --soft: rgba(255,255,255,.035);
+        }
+
+        body {
+
+            min-height: 100vh;
+
+            background:
+                radial-gradient(
+                    circle at var(--mx,50%) var(--my,30%),
+                    rgba(220,212,193,.11),
+                    transparent 28%
+                ),
+                #080808;
+
+            color: var(--text);
+
+            font-family:
+                "IBM Plex Sans Arabic",
+                sans-serif;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 25px 15px;
+
+            overflow-x: hidden;
+        }
+
+
+        /* GRAIN */
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            pointer-events: none;
+
+            opacity: .035;
+
+            background-image:
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+        }
+
+
+        /* CARD */
+
+        .card {
+
+            width: min(100%, 430px);
+
+            position: relative;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.055),
+                    rgba(255,255,255,.012)
+                );
+
+            border: 1px solid var(--line);
+
+            border-radius: 28px;
+
+            padding: 35px 28px 25px;
+
+            box-shadow:
+                0 40px 100px rgba(0,0,0,.6),
+                inset 0 1px 0 rgba(255,255,255,.04);
+
+            overflow: hidden;
+
+            animation:
+                cardIn 1s cubic-bezier(.16,1,.3,1);
+        }
+
+
+        @keyframes cardIn {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(35px)
+                    scale(.97);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+        }
+
+
+        /* DECORATION */
+
+        .card::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+            height: 300px;
+
+            top: -170px;
+            left: -130px;
+
+            border-radius: 50%;
+
+            border:
+                1px solid rgba(255,255,255,.07);
+
+            box-shadow:
+                0 0 0 30px rgba(255,255,255,.015),
+                0 0 0 60px rgba(255,255,255,.008);
+        }
+
+
+        /* TOP */
+
+        .top {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 42px;
+        }
+
+
+        .logo {
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            font-size: 28px;
+
+            letter-spacing: 3px;
+        }
+
+
+        .digital {
+
+            color: var(--muted);
+
+            font-size: 8px;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+        }
+
+
+        /* PROFILE */
+
+        .profile {
+
+            text-align: center;
+        }
+
+
+        .avatar {
+
+            width: 96px;
+            height: 96px;
+
+            margin:
+                0 auto 22px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            background:
+                radial-gradient(
+                    circle at 35% 30%,
+                    #eee9df,
+                    #aaa497 48%,
+                    #4c4943
+                );
+
+            color: #161513;
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            font-size: 44px;
+
+            border:
+                1px solid
+                rgba(255,255,255,.2);
+
+            box-shadow:
+                0 20px 50px
+                rgba(0,0,0,.4);
+        }
+
+
+        .name {
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            font-size: 42px;
+
+            font-weight: 500;
+
+            line-height: 1;
+        }
+
+
+        .role {
+
+            margin-top: 13px;
+
+            color: var(--muted);
+
+            font-size: 11px;
+
+            letter-spacing: 1.8px;
+        }
+
+
+        /* DESCRIPTION */
+
+        .description {
+
+            max-width: 325px;
+
+            margin:
+                24px auto 22px;
+
+            text-align: center;
+
+            color: #aaa79f;
+
+            font-size: 11px;
+
+            line-height: 2;
+        }
+
+
+        /* SKILLS */
+
+        .skills {
+
+            display: flex;
+
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+            gap: 7px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .skill {
+
+            padding:
+                6px 11px;
+
+            border:
+                1px solid
+                var(--line);
+
+            border-radius: 100px;
+
+            color: #bdbab2;
+
+            font-size: 9px;
+
+            transition: .3s;
+        }
+
+
+        .skill:hover {
+
+            color: white;
+
+            border-color:
+                rgba(255,255,255,.3);
+
+            transform:
+                translateY(-2px);
+        }
+
+
+        /* LINKS */
+
+        .links {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 9px;
+        }
+
+
+        .link {
+
+            min-height: 51px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding:
+                0 16px;
+
+            border:
+                1px solid
+                var(--line);
+
+            border-radius: 13px;
+
+            background:
+                var(--soft);
+
+            color: var(--text);
+
+            text-decoration: none;
+
+            transition:
+                .35s cubic-bezier(.16,1,.3,1);
+        }
+
+
+        .link:hover {
+
+            transform:
+                translateX(-5px);
+
+            background:
+                rgba(255,255,255,.065);
+
+            border-color:
+                rgba(255,255,255,.22);
+        }
+
+
+        .link-info {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+
+        .icon {
+
+            width: 28px;
+            height: 28px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,.07);
+
+            font-size: 10px;
+        }
+
+
+        .link-title {
+
+            font-size: 11px;
+        }
+
+
+        .arrow {
+
+            color: #6f6c66;
+
+            transition: .3s;
+        }
+
+
+        .link:hover .arrow {
+
+            transform:
+                translateX(-4px);
+
+            color: white;
+        }
+
+
+        /* ACTIONS */
+
+        .actions {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 9px;
+
+            margin-top: 10px;
+        }
+
+
+        .action {
+
+            height: 49px;
+
+            border:
+                1px solid
+                var(--line);
+
+            border-radius: 13px;
+
+            background: transparent;
+
+            color: #ddd9d0;
+
+            font-family: inherit;
+
+            font-size: 10px;
+
+            cursor: pointer;
+
+            transition: .3s;
+        }
+
+
+        .action:hover {
+
+            background: #eeeae0;
+
+            color: #111;
+
+            transform:
+                translateY(-2px);
+        }
+
+
+        /* QR */
+
+        .qr-section {
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            margin-top: 25px;
+        }
+
+
+        #qrcode {
+
+            padding: 10px;
+
+            background:
+                #eeeae0;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 15px 40px
+                rgba(0,0,0,.3);
+        }
+
+
+        #qrcode img,
+        #qrcode canvas {
+
+            display: block;
+        }
+
+
+        .qr-text {
+
+            margin-top: 10px;
+
+            color: #706d67;
+
+            font-size: 8px;
+
+            letter-spacing: 1.5px;
+
+            text-transform: uppercase;
+        }
+
+
+        /* FOOTER */
+
+        .footer {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-top: 25px;
+
+            padding-top: 18px;
+
+            border-top:
+                1px solid
+                var(--line);
+
+            color: #605d57;
+
+            font-size: 8px;
+
+            letter-spacing: 1px;
+        }
+
+
+        .status {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 6px;
+        }
+
+
+        .status-dot {
+
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: #bdb6a5;
+
+            box-shadow:
+                0 0 10px
+                rgba(220,215,200,.6);
+        }
+
+
+        /* MOBILE */
+
+        @media(max-width:480px) {
+
+            body {
+
+                align-items:
+                    flex-start;
+
+                padding: 12px;
+            }
+
+
+            .card {
+
+                margin-top: 4px;
+
+                padding:
+                    30px 20px 22px;
+
+                border-radius: 24px;
+            }
+
+
+            .top {
+
+                margin-bottom: 35px;
+            }
+
+
+            .name {
+
+                font-size: 37px;
+            }
+
+
+            .avatar {
+
+                width: 84px;
+                height: 84px;
+
+                font-size: 39px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<main class="card">
+
+
+    <!-- TOP -->
+
+    <div class="top">
+
+        <div class="logo">
+            M
+        </div>
+
+        <div class="digital">
+            DIGITAL BUSINESS CARD
+        </div>
+
+    </div>
+
+
+    <!-- PROFILE -->
+
+    <section class="profile">
+
+        <div class="avatar">
+            M
+        </div>
+
+        <h1 class="name">
+            Marwa Hussein
+        </h1>
+
+        <p class="role">
+            WEB DESIGNER & DEVELOPER
+        </p>
+
+    </section>
+
+
+    <!-- DESCRIPTION -->
+
+    <p class="description">
+
+        مصممة ومطورة مواقع ويب متخصصة في بناء
+        التجارب الرقمية الحديثة، الواجهات التفاعلية
+        والتصاميم البصرية الاحترافية.
+
+    </p>
+
+
+    <!-- SKILLS -->
+
+    <div class="skills">
+
+        <span class="skill">
+            HTML
+        </span>
+
+        <span class="skill">
+            CSS
+        </span>
+
+        <span class="skill">
+            JavaScript
+        </span>
+
+        <span class="skill">
+            Front-End
+        </span>
+
+        <span class="skill">
+            Back-End
+        </span>
+
+    </div>
+
+
+    <!-- LINKS -->
+
+    <div class="links">
+
+
+        <!-- WHATSAPP -->
+
+        <a
+            class="link"
+            href="https://wa.me/966550961627"
+            target="_blank"
+        >
+
+            <div class="link-info">
+
+                <span class="icon">
+                    WA
+                </span>
+
+                <span class="link-title">
+                    WhatsApp
+                </span>
+
+            </div>
+
+            <span class="arrow">
+                ←
+            </span>
+
+        </a>
+
+
+        <!-- PHONE -->
+
+        <a
+            class="link"
+            href="tel:+966550961627"
+        >
+
+            <div class="link-info">
+
+                <span class="icon">
+                    ☎
+                </span>
+
+                <span class="link-title">
+                    055 096 1627
+                </span>
+
+            </div>
+
+            <span class="arrow">
+                ←
+            </span>
+
+        </a>
+
+
+        <!-- EMAIL -->
+
+        <a
+            class="link"
+            href="mailto:marwa.h1k2@gmail.com"
+        >
+
+            <div class="link-info">
+
+                <span class="icon">
+                    @
+                </span>
+
+                <span class="link-title">
+                    Email
+                </span>
+
+            </div>
+
+            <span class="arrow">
+                ←
+            </span>
+
+        </a>
+
+
+        <!-- PORTFOLIO -->
+
+        <a
+            class="link"
+            href="https://marwwaoljo.github.io/marwa-portfolio/index.html"
+            target="_blank"
+        >
+
+            <div class="link-info">
+
+                <span class="icon">
+                    ↗
+                </span>
+
+                <span class="link-title">
+                    Portfolio
+                </span>
+
+            </div>
+
+            <span class="arrow">
+                ←
+            </span>
+
+        </a>
+
+
+        <!-- INSTAGRAM -->
+
+        <a
+            class="link"
+            href="https://www.instagram.com/meme.h1k2/"
+            target="_blank"
+        >
+
+            <div class="link-info">
+
+                <span class="icon">
+                    ◎
+                </span>
+
+                <span class="link-title">
+                    Instagram
+                </span>
+
+            </div>
+
+            <span class="arrow">
+                ←
+            </span>
+
+        </a>
+
+
+        <!-- TIKTOK -->
+
+        <a
+            class="link"
+            href="https://www.tiktok.com/@of_the_future1"
+            target="_blank"
+        >
+
+            <div class="link-info">
+
+                <span class="icon">
+                    ♪
+                </span>
+
+                <span class="link-title">
+                    TikTok
+                </span>
+
+            </div>
+
+            <span class="arrow">
+                ←
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+    <!-- ACTIONS -->
+
+    <div class="actions">
+
+        <button
+            class="action"
+            onclick="saveContact()"
+        >
+            حفظ جهة الاتصال
+        </button>
+
+
+        <button
+            class="action"
+            onclick="shareCard()"
+        >
+            مشاركة البطاقة
+        </button>
+
+    </div>
+
+
+    <!-- QR -->
+
+    <div class="qr-section">
+
+        <div id="qrcode"></div>
+
+        <span class="qr-text">
+            Scan to view my portfolio
+        </span>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <div class="status">
+
+            <span class="status-dot"></span>
+
+            Available for projects
+
+        </div>
+
+
+        <div>
+            © 2026 MARWA
+        </div>
+
+    </footer>
+
+
+</main>
+
+
+
+<script>
+
+
+/* =========================================
+   MOUSE LIGHT
+========================================= */
+
+document.addEventListener(
+    "mousemove",
+    function(e) {
+
+        document.documentElement
+            .style
+            .setProperty(
+                "--mx",
+                e.clientX + "px"
+            );
+
+        document.documentElement
+            .style
+            .setProperty(
+                "--my",
+                e.clientY + "px"
+            );
+
+    }
+);
+
+
+
+/* =========================================
+   QR CODE
+========================================= */
+
+new QRCode(
+    document.getElementById("qrcode"),
+    {
+
+        text:
+            "https://marwwaoljo.github.io/marwa-portfolio/index.html",
+
+        width: 135,
+
+        height: 135,
+
+        colorDark:
+            "#111111",
+
+        colorLight:
+            "#eeeae0",
+
+        correctLevel:
+            QRCode.CorrectLevel.H
+    }
+);
+
+
+
+/* =========================================
+   SAVE CONTACT
+========================================= */
+
+function saveContact() {
+
+
+    const vcard =
+
+`BEGIN:VCARD
+VERSION:3.0
+FN:Marwa Hussein Abdulrahman
+N:Hussein Abdulrahman;Marwa;;;
+TEL;TYPE=CELL:+966550961627
+EMAIL:marwa.h1k2@gmail.com
+TITLE:Web Designer & Developer
+NOTE:Front-End & Back-End Developer
+URL:https://marwwaoljo.github.io/marwa-portfolio/index.html
+X-SOCIALPROFILE;TYPE=Instagram:https://www.instagram.com/meme.h1k2/
+X-SOCIALPROFILE;TYPE=TikTok:https://www.tiktok.com/@of_the_future1
+END:VCARD`;
+
+
+    const blob =
+        new Blob(
+            [vcard],
+            {
+                type:
+                    "text/vcard"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const a =
+        document.createElement("a");
+
+
+    a.href = url;
+
+    a.download =
+        "Marwa-Hussein.vcf";
+
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    a.remove();
+
+    URL.revokeObjectURL(url);
+
+}
+
+
+
+/* =========================================
+   SHARE
+========================================= */
+
+async function shareCard() {
+
+
+    const shareData = {
+
+        title:
+            "Marwa Hussein",
+
+        text:
+            "Marwa Hussein — Web Designer & Developer",
+
+        url:
+            window.location.href
+
+    };
+
+
+    if (
+        navigator.share
+    ) {
+
+        try {
+
+            await navigator.share(
+                shareData
+            );
+
+        } catch (error) {
+
+            console.log(
+                "Share cancelled"
+            );
+
+        }
+
+    } else {
+
+        try {
+
+            await navigator.clipboard.writeText(
+                window.location.href
+            );
+
+            alert(
+                "تم نسخ رابط البطاقة"
+            );
+
+        } catch {
+
+            alert(
+                "انسخي رابط الصفحة لمشاركته"
+            );
+
+        }
+
+    }
+
+}
+
+</script>
+
+
+</body>
+</html>
